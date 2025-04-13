@@ -1,0 +1,57 @@
+<div className="four wide field pb-10">
+  <label
+    className="form-label fw-semibold "
+    style={{ fontSize: "15pt"}}
+  >
+    Assessment Status<span className="required">*</span>
+  </label>
+  <br />
+  <Dropdown
+    style={{ width: "30rem" }}
+    placeholder="Assessment Status"
+    selection
+    search
+    className="fixed-multi-dropdown"
+    value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? -1}
+    options={assessmentStatusMasterData}
+    onChange={(event, data) => {
+      dispatch(setAssessmentStatus(data.value));
+      validateAssessmentStatus(data.value);
+    }}
+    id="assessmentstatus"
+    name="assessmentstatus"
+    aria-describedby="title-error"
+    required
+    aria-invalid={!!error}
+    renderLabel={item => {
+      // If it's the first selected item, show it normally
+      if (item.value === vrmData.vrmAssessmentDatacopy.assessmentStatus?.[0]) {
+        return {
+          content: item.text,
+          // Add a badge if there are more selections
+          ...(vrmData.vrmAssessmentDatacopy.assessmentStatus?.length > 1 && {
+            ribbon: true,
+            content: (
+              <>
+                {item.text}
+                <span 
+                  style={{
+                    marginLeft: '5px',
+                    background: '#e0e0e0',
+                    borderRadius: '10px',
+                    padding: '2px 8px',
+                    fontSize: '0.8em'
+                  }}
+                >
+                  +{vrmData.vrmAssessmentDatacopy.assessmentStatus.length - 1} selected
+                </span>
+              </>
+            )
+          })
+        };
+      }
+      // Don't render other selected items (they'll be shown in the badge)
+      return null;
+    }}
+  />
+</div>
