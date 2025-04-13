@@ -9,6 +9,7 @@
   <Dropdown
     style={{ width: "30rem" }}
     placeholder="Assessment Status"
+    multiple
     selection
     search
     className="fixed-multi-dropdown"
@@ -23,35 +24,69 @@
     aria-describedby="title-error"
     required
     aria-invalid={!!error}
-    renderLabel={item => {
-      // If it's the first selected item, show it normally
-      if (item.value === vrmData.vrmAssessmentDatacopy.assessmentStatus?.[0]) {
-        return {
-          content: item.text,
-          // Add a badge if there are more selections
-          ...(vrmData.vrmAssessmentDatacopy.assessmentStatus?.length > 1 && {
-            ribbon: true,
-            content: (
-              <>
-                {item.text}
-                <span 
-                  style={{
-                    marginLeft: '5px',
-                    background: '#e0e0e0',
-                    borderRadius: '10px',
-                    padding: '2px 8px',
-                    fontSize: '0.8em'
-                  }}
-                >
-                  +{vrmData.vrmAssessmentDatacopy.assessmentStatus.length - 1} selected
-                </span>
-              </>
-            )
-          })
-        };
+    renderLabel={(item) => {
+      // Show all selected items but limit the visible area
+      return (
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          maxWidth: '100%',
+          overflow: 'hidden'
+        }}>
+          <span style={{
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            maxWidth: 'calc(100% - 50px)'
+          }}>
+            {item.text}
+          </span>
+        </div>
+      );
+    }}
+    // Add this to control the display of selected items
+    renderText={(value, options, selectedOptions) => {
+      if (selectedOptions.length === 0) {
+        return "Assessment Status";
       }
-      // Don't render other selected items (they'll be shown in the badge)
-      return null;
+      
+      // Show first 2 items fully, then "+X more"
+      const maxVisibleItems = 2;
+      const visibleItems = selectedOptions.slice(0, maxVisibleItems);
+      const remainingCount = selectedOptions.length - maxVisibleItems;
+      
+      return (
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          width: '100%'
+        }}>
+          {visibleItems.map((option, index) => (
+            <span key={option.value} style={{
+              marginRight: '5px',
+              whiteSpace: 'nowrap'
+            }}>
+              {option.text}
+              {index < visibleItems.length - 1 ? ',' : ''}
+            </span>
+          ))}
+          {remainingCount > 0 && (
+            <span style={{
+              background: '#e0e0e0',
+              borderRadius: '10px',
+              padding: '2px 8px',
+              fontSize: '0.8em',
+              marginLeft: '5px',
+              whiteSpace: 'nowrap'
+            }}>
+              +{remainingCount} more
+            </span>
+          )}
+        </div>
+      );
     }}
   />
 </div>
