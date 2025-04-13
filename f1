@@ -1,46 +1,32 @@
-<Dropdown
-        placeholder="Assessment Status"
-        fluid
-        multiple
-        search
-        selection
-        className="fixed-multi-dropdown"
-        value={selected}
-        options={assessmentStatusMasterData}
-        onChange={(e, data) => {
-          dispatch(setAssessmentStatus(data.value));
-          validateAssessmentStatus(data.value);
-        }}
-        id="assessmentstatus"
-        name="assessmentstatus"
-        aria-describedby="title-error"
-        required
-        aria-invalid={!!error}
-        renderLabel={(item) => {
-          // Show only the first selected item with a badge
-          if (item.value === selected[0]) {
-            const count = selected.length;
-            return {
-              content: (
-                <>
-                  {item.text}
-                  {count > 1 && (
-                    <span
-                      style={{
-                        marginLeft: "5px",
-                        background: "#e0e0e0",
-                        borderRadius: "10px",
-                        padding: "2px 8px",
-                        fontSize: "0.8em"
-                      }}
-                    >
-                      +{count - 1} selected
-                    </span>
-                  )}
-                </>
-              )
-            };
-          }
-          return null;
-        }}
-      />
+import { MultiSelect } from 'primereact/multiselect';
+
+// ... other imports and code ...
+
+<div className="four wide field pb-10">
+  <label
+    className="form-label fw-semibold"
+    style={{ fontSize: "15pt" }}
+  >
+    Assessment Status<span className="required">*</span>
+  </label>
+  <br />
+  <MultiSelect
+    style={{ width: "30rem" }}
+    placeholder="Assessment Status"
+    value={vrmData.vrmAssessmentDatacopy.assessmentStatus || []}
+    options={assessmentStatusMasterData.filter(option => option.value !== -1)} // exclude the "Select" option
+    onChange={(e) => {
+      dispatch(setAssessmentStatus(e.value));
+      validateAssessmentStatus(e.value);
+    }}
+    id="assessmentstatus"
+    name="assessmentstatus"
+    aria-describedby="title-error"
+    required
+    aria-invalid={!!error}
+    display="chip"
+    selectedItemsLabel="{0} selected"
+    maxSelectedLabels={1} // Show only 1 item, then "+X selected"
+    showSelectAll={false}
+  />
+</div>
