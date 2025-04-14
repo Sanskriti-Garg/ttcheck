@@ -1,0 +1,63 @@
+import { MultiSelect } from 'primereact/multiselect';
+
+// Convert assessmentStatusMasterData to PrimeReact format
+const assessmentStatusOptionsRaw = assessmentStatusMasterData
+  .filter((item) => item.value !== -1)
+  .map((item) => ({
+    label: item.text,
+    value: item.value,
+  }));
+
+// Utility to show custom selected count
+const selectedTemplate = (value: string[] | null) => {
+  if (!value || value.length === 0) {
+    return "Select Assessment Status";
+  } else {
+    return `${value.length} item${value.length > 1 ? "s" : ""} selected`;
+  }
+};
+
+// Dynamically sort options: selected ones first
+const selectedValues = vrmData.vrmAssessmentDatacopy.assessmentStatus ?? [];
+const assessmentStatusOptions = [
+  ...assessmentStatusOptionsRaw.filter(opt => selectedValues.includes(opt.value)),
+  ...assessmentStatusOptionsRaw.filter(opt => !selectedValues.includes(opt.value)),
+];
+
+<div className="ui segment row mb-3">
+  <div className="col-md-4 col-sm-6">
+    <div className="four wide field pb-10">
+      <label className="form-label fw-semibold" style={{ fontSize: "15pt" }}>
+        Assessment Status<span className="required">*</span>
+      </label>
+      <br />
+
+      <MultiSelect
+        style={{ width: "30rem" }}
+        value={selectedValues}
+        options={assessmentStatusOptions}
+        onChange={(e) => {
+          dispatch(setAssessmentStatus(e.value));
+          validateAssessmentStatus(e.value);
+        }}
+        optionLabel="label"
+        placeholder="Select Assessment Status"
+        display="chip"
+        maxSelectedLabels={0}
+        selectedItemTemplate={() => selectedTemplate(selectedValues)}
+        filter
+        showSelectAll={false}
+        className="w-full md:w-30rem"
+        aria-describedby="title-error"
+        required
+        aria-invalid={!!error}
+      />
+
+      {error?.assessmentstatus && (
+        <div className="text-danger mt-1">
+          <strong id="title-error" role="alert">{error.assessmentstatus}</strong>
+        </div>
+      )}
+    </div>
+  </div>
+</div>
