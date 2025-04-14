@@ -59,3 +59,9 @@ const selectedTemplate = (value: string[] | null) => {
     </div>
   </div>
 </div>
+
+const selectedAssessmentStatus = vrmData.vrmAssessmentDatacopy.assessmentStatus ?? [];
+const sortedOptions = [
+  ...baseOptions.filter((opt) => selectedAssessmentStatus.includes(opt.value)),
+  ...baseOptions.filter((opt) => !selectedAssessmentStatus.includes(opt.value)),
+];
