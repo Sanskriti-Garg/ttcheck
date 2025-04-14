@@ -1,0 +1,71 @@
+import { Dropdown, Popup, Label, Icon } from "semantic-ui-react";
+
+const selectedValues = vrmData.vrmAssessmentDatacopy.assessmentStatus ?? [];
+
+const handleUnselect = (valueToRemove) => {
+  const updated = selectedValues.filter((val) => val !== valueToRemove);
+  dispatch(setAssessmentStatus(updated));
+  validateAssessmentStatus(updated);
+};
+
+<Popup
+  on="click"
+  position="bottom left"
+  trigger={
+    <Dropdown
+      style={{ width: "30rem" }}
+      placeholder="Assessment Status"
+      selection
+      search
+      multiple
+      className="fixed-multi-dropdown"
+      value={selectedValues}
+      options={assessmentStatusMasterData}
+      onChange={(event, data) => {
+        dispatch(setAssessmentStatus(data.value));
+        validateAssessmentStatus(data.value);
+      }}
+      renderLabel={() => {
+        const first = assessmentStatusMasterData.find((o) => o.value === selectedValues[0]);
+        const count = selectedValues.length - 1;
+        return {
+          content:
+            selectedValues.length > 1
+              ? `${first?.text ?? "Item"} +${count} selected`
+              : first?.text ?? "",
+          style: {
+            backgroundColor: "#e0e1e2",
+            padding: "5px 10px",
+            borderRadius: "5px",
+            maxHeight: "30px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          },
+        };
+      }}
+      id="assessmentstatus"
+      name="assessmentstatus"
+      aria-describedby="title-error"
+      required
+      aria-invalid={!!error}
+    />
+  }
+  content={
+    selectedValues.length > 0 ? (
+      <div style={{ maxHeight: "200px", overflowY: "auto", minWidth: "250px" }}>
+        {selectedValues.map((val) => {
+          const option = assessmentStatusMasterData.find((o) => o.value === val);
+          return (
+            <Label key={val} style={{ margin: "5px" }}>
+              {option?.text}
+              <Icon name="close" onClick={() => handleUnselect(val)} style={{ cursor: "pointer" }} />
+            </Label>
+          );
+        })}
+      </div>
+    ) : (
+      "No items selected"
+    )
+  }
+/>
