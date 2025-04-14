@@ -1,123 +1,88 @@
-import React, { useState, useRef } from 'react';
-import { Dropdown, Popup, Label } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import './App.css';
-
-function App() {
-  const [selectedValues, setSelectedValues] = useState([]);
-  const [popupOpen, setPopupOpen] = useState(false);
-
-  const assessmentStatusOptions = [
-    { text: "Not Started", value: "Not Started" },
-    { text: "In Architecture Review", value: "In Architecture Review" },
-    { text: "Ready For AC Review", value: "Ready For AC Review" },
-    { text: "Ready For TBM Review", value: "Ready For TBM Review" },
-    { text: "In RFP Assessment", value: "In RFP Assessment" },
-    { text: "TSC Evaluation", value: "TSC Evaluation" },
-    { text: "Architecture Assessment Completed", value: "Architecture Assessment Completed" },
-    { text: "On Hold", value: "On Hold" },
-  ];
-
-  const handleChange = (e, { value }) => {
-    setSelectedValues(value);
-  };
-
-  const handleDeselect = (valueToRemove) => {
-    setSelectedValues(prev => prev.filter(val => val !== valueToRemove));
-  };
-
-  const SelectionTooltip = () => (
-    <div className="selection-tooltip">
-      <div className="tooltip-header">Selected Options</div>
-      <div className="tooltip-options">
-        {selectedValues.map(value => {
-          const option = assessmentStatusOptions.find(opt => opt.value === value);
-          return (
-            <div key={value} className="tooltip-option">
-              <span>{option?.text || value}</span>
-              <Label
-                circular
-                size="tiny"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeselect(value);
-                }}
-                className="deselect-button"
-              >
-                ×
-              </Label>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-
-  const renderDropdownText = () => {
-    if (selectedValues.length === 0) return 'Select Assessment Status';
-
-    const firstOption = assessmentStatusOptions.find(opt => opt.value === selectedValues[0]);
-    const firstText = firstOption?.text || selectedValues[0];
-
-    if (selectedValues.length === 1) {
-      return firstText;
-    }
-
-    const restCount = selectedValues.length - 1;
-
-    return (
-      <span>
-        {firstText}{' '}
+<div className="four wide field pb-10">
+  <label
+    className="form-label fw-semibold "
+    style={{ fontSize: "15pt" }}
+  >
+    Assessment Status<span className="required">*</span>
+  </label>
+  <br />
+  <Dropdown
+    style={{ width: "30rem", maxHeight: "36px", overflow: "hidden" }}
+    placeholder="Assessment Status"
+    selection
+    multiple
+    search
+    className="fixed-multi-dropdown"
+    value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? -1}
+    options={assessmentStatusMasterData}
+    onChange={(event, data) => {
+      dispatch(setAssessmentStatus(data.value));
+      validateAssessmentStatus(data.value);
+    }}
+    id="assessmentstatus"
+    name="assessmentstatus"
+    aria-describedby="title-error"
+    required
+    aria-invalid={!!error}
+    renderLabel={(item) => ({
+      content: (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>{item.text}</span>
+        </div>
+      ),
+    })}
+    renderSelection={(selectedItems) => {
+      if (selectedItems.length === 0) {
+        return <span style={{ color: 'rgba(0,0,0,.4)' }}>Assessment Status</span>;
+      }
+      
+      if (selectedItems.length === 1) {
+        return <span>{selectedItems[0].text}</span>;
+      }
+      
+      return (
         <Popup
-          on="click"
-          open={popupOpen}
-          onClose={() => setPopupOpen(false)}
-          onOpen={() => setPopupOpen(true)}
           trigger={
-            <span
-              style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              +{restCount} selected
+            <span style={{ cursor: 'pointer' }}>
+              {selectedItems[0].text}
+              <span style={{ 
+                marginLeft: '5px',
+                backgroundColor: '#2185d0',
+                color: 'white',
+                borderRadius: '3px',
+                padding: '2px 5px',
+                fontSize: '0.8em'
+              }}>
+                +{selectedItems.length - 1} more
+              </span>
             </span>
           }
-          content={<SelectionTooltip />}
+          content={
+            <div style={{ padding: '10px' }}>
+              <h4>Selected Options:</h4>
+              <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                {selectedItems.map((item, index) => (
+                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', margin: '5px 0' }}>
+                    <span>{item.text}</span>
+                    <Button 
+                      icon="times" 
+                      size="mini" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newValues = selectedItems.filter(i => i.value !== item.value).map(i => i.value);
+                        dispatch(setAssessmentStatus(newValues));
+                        validateAssessmentStatus(newValues);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          }
+          on="click"
           position="bottom left"
-          className="selection-popup"
         />
-      </span>
-    );
-  };
-
-  return (
-    <div className="app">
-      <h2>Assessment Status Dropdown Demo</h2>
-
-      <div className="dropdown-container">
-        <label>
-          Assessment Status<span className="required">*</span>
-        </label>
-
-        <Dropdown
-          placeholder="Select Assessment Status"
-          fluid
-          multiple
-          selection
-          search
-          options={assessmentStatusOptions}
-          value={selectedValues}
-          onChange={handleChange}
-          closeOnChange={false}
-          showCheckbox
-          renderLabel={() => null}
-          text={renderDropdownText()}
-          className="compact-dropdown"
-        />
-      </div>
-    </div>
-  );
-}
-
-export default App;
+      );
+    }}
+  />
+</div>
