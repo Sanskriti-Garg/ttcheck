@@ -61,3 +61,14 @@ const assessmentStatusOptions = [
     </div>
   </div>
 </div>
+
+
+
+const assessmentStatusOptions = [
+  ...assessmentStatusOptionsRaw.filter((opt) =>
+    selectedValues.includes(String(opt.value))
+  ),
+  ...assessmentStatusOptionsRaw.filter((opt) =>
+    !selectedValues.includes(String(opt.value))
+  ),
+];
