@@ -1,88 +1,40 @@
-<div className="four wide field pb-10">
-  <label
-    className="form-label fw-semibold "
-    style={{ fontSize: "15pt" }}
-  >
-    Assessment Status<span className="required">*</span>
-  </label>
-  <br />
-  <Dropdown
-    style={{ width: "30rem", maxHeight: "36px", overflow: "hidden" }}
-    placeholder="Assessment Status"
-    selection
-    multiple
-    search
-    className="fixed-multi-dropdown"
-    value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? -1}
-    options={assessmentStatusMasterData}
-    onChange={(event, data) => {
-      dispatch(setAssessmentStatus(data.value));
-      validateAssessmentStatus(data.value);
-    }}
-    id="assessmentstatus"
-    name="assessmentstatus"
-    aria-describedby="title-error"
-    required
-    aria-invalid={!!error}
-    renderLabel={(item) => ({
-      content: (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span>{item.text}</span>
-        </div>
-      ),
-    })}
-    renderSelection={(selectedItems) => {
-      if (selectedItems.length === 0) {
-        return <span style={{ color: 'rgba(0,0,0,.4)' }}>Assessment Status</span>;
-      }
-      
-      if (selectedItems.length === 1) {
-        return <span>{selectedItems[0].text}</span>;
-      }
-      
-      return (
-        <Popup
-          trigger={
-            <span style={{ cursor: 'pointer' }}>
-              {selectedItems[0].text}
-              <span style={{ 
-                marginLeft: '5px',
-                backgroundColor: '#2185d0',
-                color: 'white',
-                borderRadius: '3px',
-                padding: '2px 5px',
-                fontSize: '0.8em'
-              }}>
-                +{selectedItems.length - 1} more
-              </span>
-            </span>
-          }
-          content={
-            <div style={{ padding: '10px' }}>
-              <h4>Selected Options:</h4>
-              <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                {selectedItems.map((item, index) => (
-                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', margin: '5px 0' }}>
-                    <span>{item.text}</span>
-                    <Button 
-                      icon="times" 
-                      size="mini" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const newValues = selectedItems.filter(i => i.value !== item.value).map(i => i.value);
-                        dispatch(setAssessmentStatus(newValues));
-                        validateAssessmentStatus(newValues);
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          }
-          on="click"
-          position="bottom left"
-        />
-      );
-    }}
-  />
-</div>
+<Dropdown
+  style={{ width: '30rem' }}
+  placeholder="Assessment Status"
+  selection
+  search
+  multiple
+  className="fixed-multi-dropdown"
+  value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? []}
+  options={assessmentStatusMasterData}
+  onChange={(event, data) => {
+    dispatch(setAssessmentStatus(data.value));
+    validateAssessmentStatus(data.value);
+  }}
+  renderLabel={({ value }) => {
+    const selected = data.value || [];
+    const first = assessmentStatusMasterData.find((o) => o.value === selected[0]);
+    const count = selected.length - 1;
+
+    return {
+      content:
+        selected.length > 1
+          ? `${first?.text ?? 'Item'} +${count} selected`
+          : first?.text ?? '',
+      style: {
+        backgroundColor: '#e0e1e2',
+        padding: '5px 10px',
+        borderRadius: '5px',
+        maxHeight: '30px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+      },
+    };
+  }}
+  id="assessmentstatus"
+  name="assessmentstatus"
+  aria-describedby="title-error"
+  required
+  aria-invalid={!!error}
+/>
