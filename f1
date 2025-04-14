@@ -1,3 +1,27 @@
+import 'primereact/resources/themes/lara-light-blue/theme.css'; // or your preferred theme
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
+import { MultiSelect } from 'primereact/multiselect';
+
+// Convert your assessmentStatusMasterData for PrimeReact
+const assessmentStatusOptions = assessmentStatusMasterData
+  .filter((item) => item.value !== -1) // Exclude placeholder
+  .map((item) => ({
+    label: item.text,
+    value: item.value,
+  }));
+
+// Utility to show custom selected count
+const selectedTemplate = (value: string[] | null) => {
+  if (!value || value.length === 0) {
+    return "Select Assessment Status";
+  } else {
+    return `${value.length} item${value.length > 1 ? "s" : ""} selected`;
+  }
+};
+
+
 <div className="ui segment row mb-3">
   <div className="col-md-4 col-sm-6">
     <div className="four wide field pb-10">
