@@ -1,61 +1,37 @@
-<Dropdown
-  placeholder="Assessment Status"
-  selection
-  search
-  multiple
-  closeOnChange={false}
-  value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? []}
-  options={assessmentStatusMasterData}
-  className="fixed-multi-dropdown"
-  onChange={(event, data) => {
-    dispatch(setAssessmentStatus(data.value));
-    validateAssessmentStatus(data.value);
-  }}
-/>
+<div className="ui segment row mb-3">
+  <div className="col-md-4 col-sm-6">
+    <div className="four wide field pb-10">
+      <label className="form-label fw-semibold" style={{ fontSize: "15pt" }}>
+        Assessment Status<span className="required">*</span>
+      </label>
+      <br />
 
+      <MultiSelect
+        style={{ width: "30rem" }}
+        value={vrmData.vrmAssessmentDatacopy.assessmentStatus ?? []}
+        options={assessmentStatusOptions}
+        onChange={(e) => {
+          dispatch(setAssessmentStatus(e.value));
+          validateAssessmentStatus(e.value);
+        }}
+        optionLabel="label"
+        placeholder="Select Assessment Status"
+        display="chip"
+        maxSelectedLabels={0} // hides individual tags
+        selectedItemTemplate={() => selectedTemplate(vrmData.vrmAssessmentDatacopy.assessmentStatus)}
+        filter
+        showSelectAll={false}
+        className="w-full md:w-30rem"
+        aria-describedby="title-error"
+        required
+        aria-invalid={!!error}
+      />
 
-<Dropdown
-  ...
-  text={displaySelection(vrmData.vrmAssessmentDatacopy.assessmentStatus)}
-/>
-
-const displaySelection = (selectedValues: string[]) => {
-  if (!selectedValues || selectedValues.length === 0) return 'Select Assessment Status';
-  if (selectedValues.length === 1) {
-    const selectedOption = assessmentStatusMasterData.find(opt => opt.value === selectedValues[0]);
-    return selectedOption?.text || selectedValues[0];
-  }
-  const firstText = assessmentStatusMasterData.find(opt => opt.value === selectedValues[0])?.text;
-  return `${firstText} +${selectedValues.length - 1} selected`;
-};
-
-
-{vrmData.vrmAssessmentDatacopy.assessmentStatus?.length > 0 && (
-  <div className="selection-tooltip">
-    <div className="tooltip-header">Selected Options</div>
-    <div className="tooltip-options">
-      {vrmData.vrmAssessmentDatacopy.assessmentStatus.map(value => {
-        const option = assessmentStatusMasterData.find(opt => opt.value === value);
-        return (
-          <div key={value} className="tooltip-option">
-            <span>{option?.text || value}</span>
-            <Label
-              circular
-              size="tiny"
-              onClick={(e) => {
-                e.stopPropagation();
-                const updated = vrmData.vrmAssessmentDatacopy.assessmentStatus.filter(v => v !== value);
-                dispatch(setAssessmentStatus(updated));
-              }}
-              className="deselect-button"
-              style={{ marginLeft: '8px', cursor: 'pointer' }}
-            >
-              ×
-            </Label>
-          </div>
-        );
-      })}
+      {error?.assessmentstatus && (
+        <div className="text-danger mt-1">
+          <strong id="title-error" role="alert">{error.assessmentstatus}</strong>
+        </div>
+      )}
     </div>
   </div>
-)}
-
+</div>
