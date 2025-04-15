@@ -72,3 +72,31 @@ const assessmentStatusOptions = [
     !selectedValues.includes(String(opt.value))
   ),
 ];
+
+
+
+
+
+
+
+
+
+// Utility to sort and deduplicate
+const getSortedOptions = (
+  allOptions: { label: string; value: string | number }[],
+  selected: (string | number)[]
+) => {
+  const seen = new Set();
+  const sorted = [
+    ...allOptions.filter((opt) => selected.includes(opt.value)),
+    ...allOptions.filter((opt) => !selected.includes(opt.value)),
+  ];
+  return sorted.filter((opt) => {
+    if (seen.has(opt.value)) return false;
+    seen.add(opt.value);
+    return true;
+  });
+};
+
+// Final sorted and deduplicated options
+const assessmentStatusOptions = getSortedOptions(assessmentStatusOptionsRaw, selectedValues);
