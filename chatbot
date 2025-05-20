@@ -51,3 +51,78 @@ function ChatBot() {
 }
 
 export default ChatBot;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useRef, useEffect } from 'react';
+import './ChatBot.css';
+import { FaRobot, FaRegSmile } from 'react-icons/fa';
+import { chatResponses } from './chatData';
+import MessageBubble from './MessageBubble';
+
+function ChatBot() {
+  const [messages, setMessages] = useState([
+    { type: 'bot', text: 'Hi! I am your assistant. How can I help you today?' }
+  ]);
+  const [input, setInput] = useState('');
+  const chatEndRef = useRef(null);
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    const userText = input.trim();
+    if (!userText) return;
+
+    const userMessage = { type: 'user', text: userText };
+    setMessages((prev) => [...prev, userMessage]);
+
+    const lowerText = userText.toLowerCase();
+    const botReply =
+      chatResponses[lowerText] || "I'm sorry, I don't understand that.";
+
+    const botMessage = { type: 'bot', text: botReply };
+    setTimeout(() => {
+      setMessages((prev) => [...prev, botMessage]);
+    }, 500);
+    setInput('');
+  };
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  return (
+    <div className="chat-container">
+      <header className="chat-header">🤖 SmartBot</header>
+      <div className="chat-body">
+        {messages.map((msg, index) => (
+          <MessageBubble key={index} type={msg.type} text={msg.text} />
+        ))}
+        <div ref={chatEndRef} />
+      </div>
+      <form className="chat-input" onSubmit={handleSend}>
+        <input
+          type="text"
+          placeholder="Ask me anything..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button type="submit">➤</button>
+      </form>
+    </div>
+  );
+}
+
+export default ChatBot;
