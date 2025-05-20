@@ -1,20 +1,19 @@
-import React from "react";
-import { FaRobot, FaRegSmile } from "react-icons/fa";
-import "./App.css";
+import React from 'react';
+import './ChatBot.css';
+import { FaRobot, FaRegSmile } from 'react-icons/fa';
 
 function MessageBubble({ type, text }) {
-  const isBot = type === "bot";
-
   return (
-    <div className={`message-row ${isBot ? "bot" : "user"}`}>
-      {isBot && <FaRobot className="icon" />}
+    <div className={`message-row ${type}`}>
+      {type === 'bot' && <FaRobot className="icon" />}
       <div className={`message-bubble ${type}`}>{text}</div>
-      {!isBot && <FaRegSmile className="icon" />}
+      {type === 'user' && <FaRegSmile className="icon" />}
     </div>
   );
 }
 
 export default MessageBubble;
+
 
 
 
