@@ -1,0 +1,53 @@
+import React, { useState } from 'react';
+import ChatMessage from './ChatMessage';
+import './ChatBot.css';
+
+function ChatBot() {
+  const [messages, setMessages] = useState([
+    { type: 'bot', text: 'Hello! Ask me anything.' }
+  ]);
+  const [input, setInput] = useState('');
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage = { type: 'user', text: input };
+    setMessages((prev) => [...prev, userMessage]);
+
+    // Replace with your real API call
+    const botResponse = await fetch('https://your-api.com/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input })
+    })
+      .then(res => res.json())
+      .then(data => ({ type: 'bot', text: data.reply || 'No response' }))
+      .catch(() => ({ type: 'bot', text: 'Sorry, something went wrong.' }));
+
+    setMessages((prev) => [...prev, botResponse]);
+    setInput('');
+  };
+
+  return (
+    <div className="chat-container">
+      <header className="chat-header">My AI Chatbot</header>
+      <div className="chat-body">
+        {messages.map((msg, i) => (
+          <ChatMessage key={i} type={msg.type} text={msg.text} />
+        ))}
+      </div>
+      <form className="chat-input-area" onSubmit={sendMessage}>
+        <input
+          type="text"
+          placeholder="Type your message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button type="submit">➤</button>
+      </form>
+    </div>
+  );
+}
+
+export default ChatBot;
