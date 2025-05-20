@@ -193,3 +193,50 @@
 .icon {
   font-size: 20px;
 }
+
+
+
+
+
+
+
+
+
+
+.message-row {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+
+.message-row.bot {
+  justify-content: flex-start;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 60%;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.message-bubble.bot {
+  background-color: #e0e0e0;
+  color: #333;
+  margin-left: 10px;
+}
+
+.message-bubble.user {
+  background-color: #4a90e2;
+  color: white;
+  margin-right: 10px;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
