@@ -1,0 +1,12 @@
+import React from 'react';
+import './ChatBot.css';
+
+function ChatMessage({ type, text }) {
+  return (
+    <div className={`chat-message ${type}`}>
+      <div className="chat-bubble">{text}</div>
+    </div>
+  );
+}
+
+export default ChatMessage;
