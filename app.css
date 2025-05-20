@@ -84,3 +84,14 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+
+
+
+.chat-window {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f1f1f1;
+  height: 100%; /* Ensure it grows or is scrollable */
+}
