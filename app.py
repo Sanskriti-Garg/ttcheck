@@ -61,3 +61,49 @@ def chat():
 
 if __name__ == "__main__":
     app.run(port=5000)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    from flask import Flask, request, jsonify
+from flask_cors import CORS
+import requests
+
+app = Flask(__name__)
+CORS(app)  # Allow requests from frontend
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    user_query = data.get('message')
+
+    if not user_query:
+        return jsonify({'reply': 'Please enter a message.'}), 400
+
+    try:
+        # Replace this with your real Swagger API endpoint
+        swagger_url = "https://your-swagger-api.com/endpoint"
+
+        # If your Swagger API uses GET with query param
+        response = requests.get(swagger_url, params={"query": user_query})
+
+        if response.status_code == 200:
+            reply = response.text.strip()  # Direct string response
+            return jsonify({'reply': reply})
+        else:
+            return jsonify({'reply': f"Swagger API error {response.status_code}"}), 500
+
+    except Exception as e:
+        return jsonify({'reply': f"Error: {str(e)}"}), 500
+
+if __name__ == '__main__':
+    app.run(port=5000)
