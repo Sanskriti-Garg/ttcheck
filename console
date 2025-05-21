@@ -1,0 +1,21 @@
+const sendMessage = async () => {
+  if (!input.trim()) return;
+
+  setMessages((prev) => [...prev, { type: "user", text: input }]);
+  console.log("User input:", input);
+
+  try {
+    const response = await fetch(`/api/chat?message=${encodeURIComponent(input)}`);
+    console.log("API called. Status:", response.status);
+
+    const data = await response.json();
+    console.log("Data received:", data);
+
+    setMessages((prev) => [...prev, { type: "bot", text: data.reply || "No response text" }]);
+  } catch (err) {
+    console.error("Error calling API:", err);
+    setMessages((prev) => [...prev, { type: "bot", text: "Error contacting backend." }]);
+  }
+
+  setInput("");
+};
