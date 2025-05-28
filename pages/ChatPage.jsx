@@ -22,12 +22,20 @@ const ChatPage = () => {
       const response = await fetch(agent.api, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ prompt: input })  // ✅ Updated key to "prompt"
       });
+
       const data = await response.json();
-      setMessages(prev => [...prev, { type: "bot", text: data.reply }]);
-    } catch {
-      setMessages(prev => [...prev, { type: "bot", text: "Sorry, an error occurred." }]);
+
+      setMessages(prev => [
+        ...prev,
+        { type: "bot", text: data.response || "Sorry, I couldn't understand that." }  // ✅ Updated response key
+      ]);
+    } catch (error) {
+      setMessages(prev => [
+        ...prev,
+        { type: "bot", text: "Sorry, an error occurred." }
+      ]);
     }
 
     setInput("");
@@ -43,14 +51,11 @@ const ChatPage = () => {
 
       <div className="chat-messages">
         {messages.map((msg, index) => (
-         <div key={index} className={`message-wrapper ${msg.type}`}>
-         {msg.type === "bot" && <FaRobot className="icon-bot" />}
-         
-         <div className={`message-bubble ${msg.type}`}>{msg.text}</div>
-         
-         {msg.type === "user" && <FaSmile className="icon-user" />}
-       </div>
-       
+          <div key={index} className={`message-wrapper ${msg.type}`}>
+            {msg.type === "bot" && <FaRobot className="icon-bot" />}
+            <div className={`message-bubble ${msg.type}`}>{msg.text}</div>
+            {msg.type === "user" && <FaSmile className="icon-user" />}
+          </div>
         ))}
       </div>
 
