@@ -97,4 +97,34 @@
   .chat-footer button:hover {
     background-color: #0056b3;
   }
-  
+  .message-bubble {
+  max-width: 80%;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.message-bubble.bot {
+  background-color: #e8f0fe;
+  color: #333;
+  align-self: flex-start;
+}
+
+.message-bubble.user {
+  background-color: #d1e7dd;
+  color: #000;
+  align-self: flex-end;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+
