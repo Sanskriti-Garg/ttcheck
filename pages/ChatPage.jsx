@@ -16,26 +16,22 @@ const ChatPage = () => {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    setMessages(prev => [...prev, { type: "user", text: input }]);
+    const userMessage = { type: "user", text: input };
+    setMessages(prev => [...prev, userMessage]);
 
     try {
-      const response = await fetch(agent.api, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: input })  // ✅ Updated key to "prompt"
-      });
-
-      const data = await response.json();
-
-      setMessages(prev => [
-        ...prev,
-        { type: "bot", text: data.response || "Sorry, I couldn't understand that." }  // ✅ Updated response key
-      ]);
+      const res = await fetch(
+        `${agent.api}?query=${encodeURIComponent(input)}`
+      );
+      const data = await res.text(); // API returns raw text string
+      const botMessage = { type: "bot", text: data };
+      setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      setMessages(prev => [
-        ...prev,
-        { type: "bot", text: "Sorry, an error occurred." }
-      ]);
+      const errorMessage = {
+        type: "bot",
+        text: "⚠️ Error: Could not fetch response from API."
+      };
+      setMessages(prev => [...prev, errorMessage]);
     }
 
     setInput("");
@@ -44,9 +40,9 @@ const ChatPage = () => {
   return (
     <div className="chat-container">
       <header className="chat-header">
-        <FaArrowLeft onClick={() => navigate("/")} style={{ cursor: "pointer" }} />
+        <FaArrowLeft onClick={() => navigate("/")} className="icon clickable" />
         <h2>{agent.name}</h2>
-        <FaTrash onClick={() => setMessages([])} style={{ cursor: "pointer" }} />
+        <FaTrash onClick={() => setMessages([])} className="icon clickable" />
       </header>
 
       <div className="chat-messages">
