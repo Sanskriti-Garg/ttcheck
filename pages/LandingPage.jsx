@@ -29,3 +29,92 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from "react";
+import agentsData from "../data/agents";
+import { useNavigate } from "react-router-dom";
+import "./LandingPage.css";
+
+const LandingPage = () => {
+  const navigate = useNavigate();
+  const [selectedAgent, setSelectedAgent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCardClick = (agent) => {
+    setSelectedAgent(agent);
+    setShowModal(true);
+  };
+
+  const handleChatClick = () => {
+    if (selectedAgent) {
+      navigate(`/chat/${selectedAgent.id}`);
+    }
+  };
+
+  return (
+    <div className="landing-container">
+      <h1 className="landing-header">Choose Your Agent Assistant</h1>
+
+      {agentsData.map((section, idx) => (
+        <div key={idx} className="group-box">
+          <h2 className="group-title">{section.section}</h2>
+          <div className="agent-grid">
+            {section.agents.map((agent) => (
+              <div key={agent.id} className="agent-card" onClick={() => handleCardClick(agent)}>
+                <h3>{agent.name}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {showModal && selectedAgent && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <h3>{selectedAgent.name}</h3>
+            <p>{selectedAgent.description}</p>
+            <button onClick={handleChatClick} className="chat-button">
+              Chat with Agent
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LandingPage;
+
