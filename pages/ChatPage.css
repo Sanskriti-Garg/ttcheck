@@ -256,3 +256,27 @@ pre {
   max-width: 768px;
   margin: auto;
 }
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 1.2rem;
+  color: inherit;
+}
+
+.icon-button:focus {
+  outline: 2px solid #888;
+  border-radius: 4px;
+}
+
+/* Responsive Chat Container */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
