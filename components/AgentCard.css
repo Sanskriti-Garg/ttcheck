@@ -14,3 +14,32 @@
     background: #d9f9ff;
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.agent-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .agent-card:hover {
+    background-color: #e6f4ff;
+    transform: scale(1.02);
+  }
+  
