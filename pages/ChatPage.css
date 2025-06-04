@@ -280,3 +280,160 @@ pre {
   padding: 0 10px;
   box-sizing: border-box;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 1rem 0;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+.chat-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid #ccc;
+}
+
+.chat-footer textarea {
+  flex: 1;
+  resize: none;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  line-height: 1.5;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.chat-footer button {
+  margin-left: 10px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.message-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* .message-wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 10px;
+  word-break: break-word;
+  max-width: 100%;
+} */
+
+.message-wrapper.bot {
+  flex-direction: row;
+}
+
+.message-wrapper.user {
+  flex-direction: row-reverse;
+}
+
+.message-bubble {
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+
+.message-bubble.bot {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.message-bubble.user {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.icon-bot {
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+.icon-user {
+  color: #60a5fa;
+  margin-top: 5px;
+}
+
+.responsive-container {
+  width: 100%;
+  max-width: 768px;
+  margin: auto;
+}
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 1.2rem;
+  color: inherit;
+}
+
+.icon-button:focus {
+  outline: 2px solid #888;
+  border-radius: 4px;
+}
+
+/* Responsive Chat Container */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 5000px;
+  margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
