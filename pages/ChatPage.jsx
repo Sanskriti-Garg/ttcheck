@@ -246,3 +246,25 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+
+
+
+
+
+
+<footer className="chat-footer">
+  <textarea
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault(); // prevent newline
+        sendMessage();
+      }
+    }}
+    placeholder="Type a message..."
+    rows={2}
+  />
+  <button onClick={sendMessage}>Send</button>
+</footer>
