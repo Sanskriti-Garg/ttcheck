@@ -111,3 +111,44 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const allAgents: Agent[] = [
+  { id: 1, name: "Architecture Consultant Agent" },
+  { id: 2, name: "Tech Capability Recommender" },
+  { id: 3, name: "Third party tech spend Assesor Agent" },
+  { id: 11, name: "Investment Optimization Agent" },
+  { id: 12, name: "Common Capability Assessment Agent" },
+  { id: 13, name: "Strategic Insight generator" },
+  { id: 14, name: "Identifying common genai agents" },
+  { id: 15, name: "Strategic Partnership Support Agent" },
+  { id: 5, name: "Common Capability Recommender Agent" },
+  { id: 6, name: "Vendor Product Comparator Agent" },
+  { id: 7, name: "Contract Analyzer" },
+  { id: 8, name: "Architecture Review Support Agent" },
+  { id: 9, name: "Product Assessment Agent" },
+  ...Array.from({ length: 6 }).map((_, index) => ({
+    id: 100 + index,
+    name: "Contract Analyzer",
+  })),
+];
