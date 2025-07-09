@@ -1,0 +1,323 @@
+.landing-container {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.landing-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(200px, auto);
+  gap: 1rem;
+}
+
+/* Card base style */
+.card {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.agent-card {
+  background-color: white;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.agent-card:hover {
+  background-color: #eef;
+}
+
+/* Grid positioning */
+.card-1 {
+  grid-column: span 1;
+}
+
+.card-2 {
+  grid-column: span 1;
+}
+
+.card-3 {
+  grid-column: span 2;
+}
+
+.card-4 {
+  grid-column: span 1;
+  grid-row: span 2;
+}
+
+.card-5 {
+  grid-column: span 2;
+}
+
+.card-6 {
+  grid-column: span 1;
+}
+
+.card-7 {
+  grid-column: span 1;
+}
+
+/* For the 2x2 layout inside Card 5 */
+.card-5 .subcard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Optional: if you want sub-cards styled similarly */
+.card-5 .agent-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card-5 .agent-card:hover {
+  transform: translateY(-4px);
+}
+.subcard-grid.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card.card-8 {
+  grid-column: span 5;
+}
+
+.card.card-8 {
+  grid-column: span 5;
+  margin-top: 30px; /* Add vertical space from previous row */
+  background-color: #f9f9f9; /* Optional: to differentiate */
+  /* padding: px; */
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+/**/
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: transparent;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.chat-button {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body > .landing-container {
+  transform-origin: top left;
+  width: 1920px; /* Base width used in your design (adjust if different) */
+  height: 100%;
+}
+
+@media screen and (max-width: 1920px) {
+  body > .landing-container {
+    transform: scale(calc(100vw / 1920));
+  }
+}
+
+@media screen and (max-height: 1080px) {
+  body > .landing-container {
+    transform: scale(calc(100vh / 1080));
+  }
+}
+
+/* Fit cards and content within smaller screen (e.g., 768x1366) */
+.card {
+  padding: 0.6rem;       /* Reduced from 1rem */
+  min-height: 160px;     /* Reduced from ~200px */
+}
+
+.card-5 .agent-card,
+.agent-card {
+  padding: 0.6rem;        /* Reduce agent card padding */
+  font-size: 0.9rem;      /* Slightly smaller text */
+}
+
+/* Reduce font size of headers inside cards */
+.card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Adjust subcard layout to be tighter */
+.card-5 .subcard-grid {
+  gap: 0.5rem;
+}
+
+/* Reduce gap between grid cards */
+.card-grid {
+  gap: 0.75rem;
+}
+
+/* Optional: shrink the search box */
+input[type="text"] {
+  font-size: 1rem;
+  padding: 0.5rem 0.8rem;
+}
+
+/* === Fit Layout in 768x1366 without scrollbars === */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* Reduce overall padding */
+.landing-container {
+  padding: 1rem;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Reduce card gaps */
+.card-grid {
+  gap: 0.5rem;
+  grid-auto-rows: minmax(140px, auto); /* reduce row height */
+}
+
+/* Make cards more compact */
+.card {
+  padding: 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* Subcards and agent cards tighter */
+.agent-card,
+.card-5 .agent-card {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Reduce heading size in each card */
+.card h2 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Subgrid inside card-5 */
+.card-5 .subcard-grid {
+  gap: 0.4rem;
+}
+
+/* Adjust search bar */
+input[type="text"] {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Adjust modal (if applicable) */
+.modal-box {
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Prevent box-shadow from adding visual overflow */
+.card,
+.agent-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Fix card-8 spacing */
+.card.card-8 {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  
+}
+
+
+
+.agent-card {
+  position: relative;
+  background-color: white;
+  padding: 0.4rem;
+  margin-top: 0.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border: 1px solid #ddd;
+}
+
+.agent-card:hover {
+  background-color: #eef;
+}
+
+.agent-description {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background-color: #f9f9f9;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 0.3rem;
+}
+
+.agent-card:hover .agent-description {
+  display: block;
+}
