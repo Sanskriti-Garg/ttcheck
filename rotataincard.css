@@ -161,3 +161,101 @@
   align-items: center;
   justify-content: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.carousel-container {
+  background: linear-gradient(to right, #f0f0f0, #d9d9d9);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 1rem auto;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+.card-row {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
+}
+
+.carousel-card-square {
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.6s ease-in-out;
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.8);
+  z-index: 1;
+}
+
+/* The visible focused card */
+.carousel-card-square.active {
+  opacity: 1;
+  transform: scale(1);
+  filter: none;
+  z-index: 3;
+}
+
+/* The card behind (blurred + slightly shifted) */
+.carousel-card-square.behind {
+  opacity: 0.4;
+  transform: scale(0.9) translateX(-1rem);
+  z-index: 2;
+  filter: blur(3px);
+}
+
+/* Still render hidden ones but not visible */
+.carousel-card-square.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
