@@ -1,50 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import './RotatingCards.css';
 
-const cards = [
-  { id: 1, text: 'Card 1 - Architecture', color: '#FF6B6B' },
-  { id: 2, text: 'Card 2 - Mapping Engine', color: '#4ECDC4' },
-  { id: 3, text: 'Card 3 - Spend Analyzer', color: '#FFD93D' },
-  { id: 4, text: 'Card 4 - Vendor Tool', color: '#1A535C' },
+const descriptions = [
+  {
+    text: 'Answers developer questions on architectural standards, best practices, and product info.',
+    color: '#FF6B6B',
+  },
+  {
+    text: 'Recommends technology products based on use cases, considering cost and compliance.',
+    color: '#4ECDC4',
+  },
+  {
+    text: 'Automates application to capability mapping using AI rules.',
+    color: '#FFD93D',
+  },
+  {
+    text: 'Tracks and analyzes technology spending and vendor usage trends.',
+    color: '#1A535C',
+  },
 ];
 
-const RotatingCards = () => {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  useEffect(() => {
-    if (paused) return;
-
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % cards.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [paused]);
-
-  return (
-    <div
-      className="rotating-card-container"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      {cards.map((card, i) => (
+return (
+  <div
+    className="rotating-desc-container"
+    onMouseEnter={() => setPaused(true)}
+    onMouseLeave={() => setPaused(false)}
+  >
+    <div className="stack-wrapper">
+      {descriptions.map((desc, i) => (
         <div
-          key={card.id}
-          className={`card ${i === index ? 'active' : 'inactive'}`}
+          key={i}
+          className={`rotating-desc-card ${i === index ? 'active' : 'inactive'}`}
           style={{
-            backgroundColor: card.color,
-            zIndex: cards.length - i,
+            backgroundColor: desc.color,
+            zIndex: i === index ? 10 : 1,
+            transform: i === index ? 'scale(1)' : `scale(0.95) translateY(${(index - i) * 5}px)`,
+            opacity: i === index ? 1 : 0.5,
+            filter: i === index ? 'none' : 'blur(1px)',
           }}
         >
-          {card.text}
+          {desc.text}
         </div>
       ))}
     </div>
-  );
-};
+  </div>
+);
 
-export default RotatingCards;
 
 
 
