@@ -1,37 +1,77 @@
-.rotating-desc-container {
-  width: 100%;
+.carousel-container {
+  background: linear-gradient(to right, #f0f0f0, #d9d9d9);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 1rem auto;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.top-row {
   display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-  perspective: 800px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
-.stack-wrapper {
-  position: relative;
-  width: 11rem;
-  height: 5rem;
+.welcome-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
 }
 
-.rotating-desc-card {
-  position: absolute;
+.search-bar-wrapper {
   width: 100%;
-  height: 100%;
-  padding: 0.75rem;
-  border-radius: 8px;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 8rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.carousel-card-square {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 10px;
   color: white;
   font-size: 0.85rem;
-  text-align: center;
+  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.5s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  padding: 1rem;
+  transition: all 0.6s ease-in-out;
+  opacity: 0.2;
+  filter: blur(2px);
+  transform: scale(0.9);
   pointer-events: none;
 }
 
-.rotating-desc-card.active {
+.carousel-card-square.active {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.05);
   pointer-events: auto;
 }
+
+.carousel-card-square.blurred {
+  opacity: 0.4;
+  filter: blur(2px);
+  transform: scale(0.95);
+}
+
+.carousel-card-square.hidden {
+  display: none;
+}
+
 
 
 
