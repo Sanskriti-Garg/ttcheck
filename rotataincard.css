@@ -31,3 +31,46 @@
 .card.inactive {
   opacity: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.rotating-desc-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.rotating-desc-card {
+  width: 10rem;
+  height: 4rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #6c63ff;
+  color: white;
+  font-size: 0.85rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
