@@ -1,0 +1,50 @@
+import React, { useRef, useEffect, useState } from 'react';
+
+const SearchAgents = ({ agents }) => {
+  const [query, setQuery] = useState('');
+  const [filtered, setFiltered] = useState([]);
+  const wrapperRef = useRef(null);
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    if (value.trim() === '') {
+      setFiltered([]);
+    } else {
+      setFiltered(
+        agents.filter((agent) =>
+          agent.name.toLowerCase().includes(value.toLowerCase())
+        )
+      );
+    }
+  };
+
+  const handleClickOutside = (e) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+      setFiltered([]); // remove search results on outside click
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={wrapperRef}>
+      <input
+        type="text"
+        placeholder="Search agents..."
+        value={query}
+        onChange={handleSearch}
+      />
+      {filtered.length > 0 && (
+        <div className="search-results">
+          {filtered.map((agent) => (
+            <div key={agent.id}>{agent.name}</div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
