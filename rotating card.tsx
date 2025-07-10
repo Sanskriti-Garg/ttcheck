@@ -45,3 +45,64 @@ const RotatingCards = () => {
 };
 
 export default RotatingCards;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState } from 'react';
+import './RotatingDescriptions.css';
+
+const descriptions = [
+  'Answers developer questions on architectural standards, best practices, and product info.',
+  'Recommends technology products based on use cases, considering cost and compliance.',
+  'Automates application to capability mapping using AI rules.',
+  'Tracks and analyzes technology spending and vendor usage trends.'
+];
+
+const RotatingDescriptions = () => {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % descriptions.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [paused]);
+
+  return (
+    <div
+      className="rotating-desc-container"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="rotating-desc-card">
+        {descriptions[index]}
+      </div>
+    </div>
+  );
+};
+
+export default RotatingDescriptions;
+
