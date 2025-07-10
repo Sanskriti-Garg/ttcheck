@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const SearchAgents = ({ agents }) => {
   const [query, setQuery] = useState('');
@@ -19,13 +19,12 @@ const SearchAgents = ({ agents }) => {
     }
   };
 
-  const handleClickOutside = (e) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-      setFiltered([]); // remove search results on outside click
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setFiltered([]);
+      }
+    };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -34,7 +33,7 @@ const SearchAgents = ({ agents }) => {
     <div ref={wrapperRef}>
       <input
         type="text"
-        placeholder="Search agents..."
+        placeholder="Search agents"
         value={query}
         onChange={handleSearch}
       />
@@ -48,3 +47,5 @@ const SearchAgents = ({ agents }) => {
     </div>
   );
 };
+
+export default SearchAgents;
