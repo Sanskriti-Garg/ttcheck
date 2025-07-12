@@ -241,3 +241,100 @@ const AgentCarousel = ({ SearchComponent }: Props) => {
 
 export default AgentCarousel;
 
+
+
+
+
+
+
+
+
+
+
+//############//
+
+
+import React, { useEffect, useState } from 'react';
+import './AgentCarousel.css';
+
+const cards = [
+  {
+    title: 'GitHub Copilot',
+    description: 'AI pair programmer that helps you code faster.',
+    icons: ['💻', '🤖', '⚙️'],
+    color: '#FF6B6B',
+  },
+  {
+    title: 'Dev Assistant',
+    description: 'Provides coding support and API documentation.',
+    icons: ['📘', '🧠', '🛠️'],
+    color: '#4ECDC4',
+  },
+  {
+    title: 'Tech Recommender',
+    description: 'Recommends tech stack based on requirements.',
+    icons: ['📦', '🌐', '🔍'],
+    color: '#FFD93D',
+  },
+  {
+    title: 'Spend Analyzer',
+    description: 'Analyzes your technology and vendor spend.',
+    icons: ['📊', '💰', '📉'],
+    color: '#1A535C',
+  },
+];
+
+interface Props {
+  SearchComponent: React.ReactNode;
+}
+
+const AgentCarousel = ({ SearchComponent }: Props) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % cards.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getCardClass = (i: number) => {
+    if (i === index) return 'carousel-card-square active';
+    if (i === (index - 1 + cards.length) % cards.length) return 'carousel-card-square prev';
+    if (i === (index + 1) % cards.length) return 'carousel-card-square next';
+    return 'carousel-card-square hidden';
+  };
+
+  return (
+    <div className="carousel-container">
+      <div className="top-row">
+        <h2 className="welcome-text">Welcome to the application</h2>
+        <div className="card-row">
+          {cards.map((card, i) => (
+            <div key={i} className={getCardClass(i)}>
+              <div className="card-content">
+                <div className="card-header" style={{ backgroundColor: card.color }}>
+                  <h3 className="card-title">{card.title}</h3>
+                  <p className="card-description">{card.description}</p>
+                </div>
+                <div className="card-icons">
+                  {card.icons.map((icon, j) => (
+                    <span key={j} className="icon-circle">{icon}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="search-bar-wrapper custom-search">
+        {SearchComponent}
+      </div>
+    </div>
+  );
+};
+
+export default AgentCarousel;
+
+
