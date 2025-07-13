@@ -479,3 +479,230 @@
   }
 }
 
+
+
+
+/*Hiding caraousel*/
+
+
+/* ========== Container ========== */
+.carousel-container {
+  width: 100%;
+  background: linear-gradient(to right, #f0f0f0, #d9d9d9);
+  padding: 2rem 3rem;
+  border-radius: 0;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ========== Top Section ========== */
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 2rem;
+  /* Add left and right padding */
+  overflow: visible;
+}
+
+
+.welcome-text {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* ========== Carousel Wrapper ========== */
+.carousel-wrapper {
+  flex: 1;
+  min-width: 500px;
+  overflow: visible;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ========== Card Row ========== */
+.card-row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 350px;
+  overflow: visible;
+}
+
+/* ========== Carousel Card ========== */
+.carousel-card-square {
+  position: absolute;
+  width: 340px;
+  height: 300px;
+  border-radius: 24px;
+  background: #ffffff;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.6s ease-in-out;
+  opacity: 0;
+  transform: scale(0.8);
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Active (center) card */
+.carousel-card-square.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  z-index: 3;
+}
+
+/* Peeking cards */
+.carousel-card-square.prev {
+  opacity: 0.7;
+  transform: translateX(-250px) scale(0.88);
+  z-index: 2;
+  border-radius: 24px;
+}
+
+.carousel-card-square.next {
+  opacity: 0.7;
+  transform: translateX(250px) scale(0.88);
+  z-index: 2;
+  border-radius: 24px;
+}
+
+/* Hidden cards */
+.carousel-card-square.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  border-radius: 24px;
+}
+
+/* ========== Card Inner Content ========== */
+.card-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 24px;
+}
+
+/* Colored title section */
+.card-header {
+  padding: 1rem 1.2rem;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  color: white;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.card-description {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* ========== Icons ========== */
+.card-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.icon-circle {
+  background: #f0f0f0;
+  color: #333;
+  border-radius: 50%;
+  padding: 0.6rem;
+  font-size: 1.4rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== Responsive Styles ========== */
+@media (max-width: 1024px) {
+  .card-row {
+    width: 100%;
+    height: 320px;
+  }
+
+  .carousel-card-square {
+    width: 280px;
+    height: 240px;
+  }
+
+  .carousel-card-square.prev {
+    transform: translateX(-180px) scale(0.85);
+  }
+
+  .carousel-card-square.next {
+    transform: translateX(180px) scale(0.85);
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel-container {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+  }
+
+  .card-row {
+    height: 260px;
+  }
+
+  .carousel-card-square {
+    width: 220px;
+    height: 200px;
+  }
+
+  .carousel-card-square.prev {
+    transform: translateX(-130px) scale(0.8);
+  }
+
+  .carousel-card-square.next {
+    transform: translateX(130px) scale(0.8);
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-description {
+    font-size: 0.85rem;
+  }
+
+  .icon-circle {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-row {
+    display: none;
+  }
+}
