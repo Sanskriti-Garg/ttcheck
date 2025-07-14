@@ -1,45 +1,36 @@
-const sendMessage = async () => {
-    if (!input.trim()) return;
+cconst sendMessage = async () => {
+  if (!input.trim()) return;
 
-    setMessages((prev) => [...prev, { type: 'user', text: input }]);
+  setMessages((prev) => [...prev, { type: 'user', text: input }]);
 
-    try {
-      let response;
-      let resultText;
+  try {
+    let response;
+    let resultText;
 
-      if (agent.method === 'POST') {
-        response = await fetch(agent.api, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            [agent.inputType || 'query']: input,
-          }),
-        });
-
-        const data = await response.json();
-        resultText =
-          agent.id === 5 ? formatBppaResponse(data) : JSON.stringify(data, null, 2);
-      } else {
-        // Default GET
-        response = await fetch(`${agent.api}?query=${encodeURIComponent(input)}`);
-        resultText = await response.text();
-      }
-
-      setMessages((prev) => [...prev, { type: 'bot', text: resultText }]);
-    } catch (error) {
-      setMessages((prev) => [
-        ...prev,
-        { type: 'bot', text: '⚠️ Error fetching response.' },
-      ]);
+    if (agent.method === 'POST') {
+      response = await fetch(agent.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          [agent.inputType || 'query']: input,
+        }),
+      });
+      resultText = await response.text();
+    } else {
+      response = await fetch(`${agent.api}?query=${encodeURIComponent(input)}`);
+      resultText = await response.text();
     }
 
-    setInput('');
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') sendMessage();
+    setMessages((prev) => [...prev, { type: 'bot', text: resultText }]);
+  } catch (error) {
+    setMessages((prev) => [
+      ...prev,
+      { type: 'bot', text: '⚠️ Error fetching response.' },
+    ]);
   }
 
+  setInput('');
+};
 
 
 
