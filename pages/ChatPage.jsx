@@ -378,3 +378,72 @@ function formatJsonToText(data: any, indent: number = 0): string {
 
   return result;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function formatJsonToText(data: any, indent = 0): string {
+  const spacer = '  '.repeat(indent);
+  let result = '';
+
+  if (Array.isArray(data)) {
+    data.forEach((item, index) => {
+      result += `\n${spacer}🔹 **Match ${index + 1}**\n`;
+      result += formatJsonToText(item, indent + 1);
+    });
+  } else if (typeof data === 'object' && data !== null) {
+    for (const key in data) {
+      if (Object.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+
+        // Format the key: capitalize & add spacing
+        const formattedKey = key
+          .replace(/_/g, ' ')
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+
+        // Handle nested objects
+        if (typeof value === 'object' && value !== null) {
+          result += `${spacer}${formattedKey}:\n`;
+          result += formatJsonToText(value, indent + 1);
+        } else {
+          // Special formatting for known important keys
+          if (formattedKey.toLowerCase().includes('score')) {
+            result += `${spacer}🔸 ${formattedKey}: ${value.toUpperCase()}\n`;
+          } else if (formattedKey.toLowerCase().includes('explanation')) {
+            result += `${spacer}💬 ${formattedKey}: ${value}\n\n`;
+          } else {
+            result += `${spacer}${formattedKey}: ${value}\n`;
+          }
+        }
+      }
+    }
+  } else {
+    result += `${spacer}${data}\n`;
+  }
+
+  return result;
+}
