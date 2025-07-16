@@ -321,3 +321,60 @@ export default ChatPage;
   />
   <button onClick={sendMessage}>Send</button>
 </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function formatJsonToText(data: any, indent: number = 0): string {
+  const spacer = '  '.repeat(indent);
+  let result = '';
+
+  if (Array.isArray(data)) {
+    data.forEach((item, index) => {
+      result += `${spacer}Item ${index + 1}:\n`;
+      result += formatJsonToText(item, indent + 1);
+    });
+  } else if (typeof data === 'object' && data !== null) {
+    for (const key in data) {
+      if (typeof data[key] === 'object') {
+        result += `${spacer}${key}:\n`;
+        result += formatJsonToText(data[key], indent + 1);
+      } else {
+        result += `${spacer}${key}: ${data[key]}\n`;
+      }
+    }
+  } else {
+    result += `${spacer}${data}\n`;
+  }
+
+  return result;
+}
