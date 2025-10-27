@@ -52,3 +52,17 @@ const Section1: React.FC = () => {
 };
 
 export default Section1;
+
+
+
+
+  <img
+        src={backgroundImage}
+        alt="Technical Preview Environment background"
+        className="background-img"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+          console.warn("Background image for Section1 failed to load");
+        }}
+      />
+
